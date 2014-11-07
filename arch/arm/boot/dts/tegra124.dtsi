@@ -1,0 +1,38 @@
+#include <dt-bindings/gpio/tegra-gpio.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/include/ "tegra124-soc.dtsi"
+
+#include "skeleton.dtsi"
+
+/ {
+	compatible = "nvidia,tegra124";
+	interrupt-parent = <&intc>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	intc: interrupt-controller@50041000 {
+		compatible = "arm,cortex-a15-gic";
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		reg = <0x50041000 0x1000>,
+		      <0x50042000 0x0100>;
+	};
+
+	lic: interrupt-controller@60004000 {
+		compatible = "nvidia,tegra-gic";
+		interrupt-controller;
+		reg = <0x60004000 0x40>,
+		      <0x60004100 0x40>,
+		      <0x60004200 0x40>,
+		      <0x60004300 0x40>,
+		      <0x60004400 0x40>;
+        };
+
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <1 13 0xf04
+			      1 14 0xf04>;
+	};
+};
